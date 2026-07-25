@@ -4,7 +4,7 @@ export default function Hero() {
       <div className="wrap hero-grid">
         <div>
           <div className="eyebrow">Corrientes, Argentina</div>
-          <h1>Tu celular vuelve a andar, sin vueltas.</h1>
+          <h1>Tu celular vuelve a funcionar, sin vueltas.</h1>
           <p className="sub">
             Reparación de pantallas, baterías y puertos de carga. Te explico qué tiene,
             cuánto sale y cuánto tarda antes de tocar nada.

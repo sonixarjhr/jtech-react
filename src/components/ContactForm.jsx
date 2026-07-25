@@ -3,9 +3,10 @@ import emailjs from '@emailjs/browser'
 
 // Estos 3 valores salen de tu cuenta gratuita en emailjs.com
 // (Email Services > tu servicio, Email Templates > tu template, Account > Public Key)
-const SERVICE_ID = 'TU_SERVICE_ID'
-const TEMPLATE_ID = 'TU_TEMPLATE_ID'
-const PUBLIC_KEY = 'TU_PUBLIC_KEY'
+// Se leen desde variables de entorno (ver .env.example) para no exponerlos en el repo.
+const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID
+const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID
+const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
 
 export default function ContactForm() {
   const [form, setForm] = useState({ nombre: '', contacto: '', mensaje: '' })
@@ -18,6 +19,13 @@ export default function ContactForm() {
   async function handleSubmit(e) {
     e.preventDefault()
     setStatus('sending')
+
+    if (!SERVICE_ID || !TEMPLATE_ID || !PUBLIC_KEY) {
+      console.error('Faltan variables de entorno de EmailJS. Revisá tu archivo .env')
+      setStatus('error')
+      return
+    }
+
     try {
       await emailjs.send(SERVICE_ID, TEMPLATE_ID, form, { publicKey: PUBLIC_KEY })
       setStatus('sent')
